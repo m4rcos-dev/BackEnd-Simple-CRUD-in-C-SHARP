@@ -10,35 +10,35 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Migrations
 {
-    [DbContext(typeof(UsuarioContext))]
-    [Migration("20230225135430_InitialCreate")]
-    partial class InitialCreate
+  [DbContext(typeof(UserContext))]
+  [Migration("20230225135430_InitialCreate")]
+  partial class InitialCreate
+  {
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "7.0.3")
+          .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models.UsuarioModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models.UsuarioModel", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime(6)");
+            b.Property<DateTime>("BirthDate")
+                      .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
+            b.Property<string>("Name")
+                      .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
-                });
+            b.ToTable("Usuarios");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

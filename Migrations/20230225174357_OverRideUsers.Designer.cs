@@ -3,6 +3,7 @@ using System;
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Migrations
 {
     [DbContext(typeof(UserContext))]
-    partial class UsuarioContextModelSnapshot : ModelSnapshot
+    [Migration("20230225174357_OverRideUsers")]
+    partial class OverRideUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
