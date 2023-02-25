@@ -1,9 +1,16 @@
+using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Data;
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models;
 
 namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
 {
   public class UserRepository : IUserRepository
   {
+    private readonly UserContext _context;
+
+    public UserRepository(UserContext context)
+    {
+      _context = context;
+    }
     public void CreateUser(UserModel user)
     {
       throw new NotImplementedException();
