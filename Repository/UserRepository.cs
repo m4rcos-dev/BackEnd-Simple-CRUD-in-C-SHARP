@@ -1,5 +1,6 @@
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Data;
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
 {
@@ -12,9 +13,9 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
       _context = context;
     }
 
-    public Task<IEnumerable<UserModel>> GetAllUsers()
+    public async Task<IEnumerable<UserModel>> GetAllUsers()
     {
-      throw new NotImplementedException();
+      return await _context.Users.ToListAsync();
     }
 
     public Task<IEnumerable<UserModel>> GetById(int id)
