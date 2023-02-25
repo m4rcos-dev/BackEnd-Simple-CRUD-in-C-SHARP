@@ -18,10 +18,15 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      var users = await _repository.GetAllUsers();
-      return users.Any()
-              ? Ok(users)
-              : NoContent();
+      try
+      {
+        var users = await _repository.GetAllUsers();
+        return Ok(users);
+      }
+      catch
+      {
+        return NoContent();
+      }
     }
 
     [HttpPost]

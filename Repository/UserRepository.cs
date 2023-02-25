@@ -13,14 +13,14 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
       _context = context;
     }
 
-    public async Task<IEnumerable<UserModel>> GetAllUsers()
+    public Task<List<UserModel>> GetAllUsers()
     {
-      return await _context.Users.ToListAsync();
+      return Task.FromResult(_context.Users.ToList());
     }
 
-    public Task<IEnumerable<UserModel>> GetById(int id)
+    public  Task<UserModel> GetById(int id)
     {
-      throw new NotImplementedException();
+      return _context.Users.FirstAsync(x => x.Id == id);
     }
 
     public void CreateUser(UserModel user)
