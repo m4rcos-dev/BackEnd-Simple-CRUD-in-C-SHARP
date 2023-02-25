@@ -1,4 +1,5 @@
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Data;
+using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +11,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Conexão com o banco MySql
 builder.Services.AddDbContext<UserContext>(options =>
 {
   string connectionString = builder.Configuration.GetConnectionString("Default");
   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+
+// Injeção de depêndencia do Repository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
