@@ -11,15 +11,6 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
     {
       _context = context;
     }
-    public void CreateUser(UserModel user)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void DeleteUser(UserModel user)
-    {
-      throw new NotImplementedException();
-    }
 
     public Task<IEnumerable<UserModel>> GetAllUsers()
     {
@@ -31,9 +22,24 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
       throw new NotImplementedException();
     }
 
+    public void CreateUser(UserModel user)
+    {
+      _context.Add(user);
+    }
+
     public void UpdateUser(UserModel user)
     {
       throw new NotImplementedException();
+    }
+
+    public void DeleteUser(UserModel user)
+    {
+      throw new NotImplementedException();
+    }
+
+    public async Task<bool> SaveChangeAsync()
+    {
+      return await _context.SaveChangesAsync() > 0;
     }
   }
 }

@@ -9,5 +9,6 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
       void CreateUser(UserModel user);
       void UpdateUser(UserModel user);
       void DeleteUser(UserModel user);
+      Task<bool> SaveChangeAsync();
     }
 }
