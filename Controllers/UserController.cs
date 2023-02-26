@@ -47,10 +47,19 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
     [HttpPost]
     public async Task<IActionResult> Post(UserModel user)
     {
-      _repository.CreateUser(user);
-      return await _repository.SaveChangeAsync()
-              ? Ok("Registered user")
-              : BadRequest("Error registering user");
+      try
+      {
+        if (user.Name == null || user.Name == "") throw new Exception("name field required");
+
+        _repository.CreateUser(user);
+        await _repository.SaveChangeAsync();
+
+        return Ok("Registered user");
+      }
+      catch(Exception error)
+      {
+        return BadRequest(error.Message);
+      }
     }
 
     [HttpPut("{id}")]
@@ -87,9 +96,9 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
         _repository.DeleteUser(user);
         await _repository.SaveChangeAsync();
 
-      return Ok("Deleted user");
+        return Ok("Deleted user");
       }
-      catch(Exception error)
+      catch (Exception error)
       {
         var typeError = error.Data == null || error.Data.Count == 0;
         return typeError ? NotFound("User not found") : BadRequest(error.Message);
