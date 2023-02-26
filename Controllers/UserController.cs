@@ -23,9 +23,24 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
         var users = await _repository.GetAllUsers();
         return Ok(users);
       }
-      catch
+      catch(Exception error)
       {
-        return NoContent();
+        return BadRequest(error.Message);
+      }
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+      try
+      {
+        var user = await _repository.GetById(id);
+        return Ok(user);
+      }
+      catch(Exception error)
+      {
+        var typeError = error.Data == null || error.Data.Count == 0;
+        return typeError ? NotFound("User not found") : BadRequest(error.Message);
       }
     }
 
