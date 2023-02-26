@@ -35,7 +35,7 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
 
     public void DeleteUser(UserModel user)
     {
-      throw new NotImplementedException();
+      _context.Remove(user);
     }
 
     public async Task<bool> SaveChangeAsync()
