@@ -50,6 +50,7 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
       try
       {
         if (user.Name == null || user.Name == "") throw new Exception("name field required");
+        if (user.Ocupation == null || user.Ocupation == "") throw new Exception("ocupation field required");
 
         _repository.CreateUser(user);
         await _repository.SaveChangeAsync();
@@ -70,9 +71,7 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
         var user = await _repository.GetById(id);
 
         user.Name = userUpdate.Name ?? user.Name;
-        user.BirthDate = userUpdate.BirthDate != new DateTime()
-                          ? userUpdate.BirthDate
-                          : user.BirthDate;
+        user.Ocupation = userUpdate.Ocupation ?? user.Ocupation;
 
         _repository.UpdateUser(user);
         await _repository.SaveChangeAsync();
