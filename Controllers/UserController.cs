@@ -76,5 +76,24 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
         return typeError ? NotFound("User not found") : BadRequest(error.Message);
       }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+      try
+      {
+        var user = await _repository.GetById(id);
+
+        _repository.DeleteUser(user);
+        await _repository.SaveChangeAsync();
+
+      return Ok("Deleted user");
+      }
+      catch(Exception error)
+      {
+        var typeError = error.Data == null || error.Data.Count == 0;
+        return typeError ? NotFound("User not found") : BadRequest(error.Message);
+      }
+    }
   }
 }
