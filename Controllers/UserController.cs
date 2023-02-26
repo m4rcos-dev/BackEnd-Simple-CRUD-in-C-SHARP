@@ -70,8 +70,8 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
       {
         var user = await _repository.GetById(id);
 
-        user.Name = userUpdate.Name ?? user.Name;
-        user.Ocupation = userUpdate.Ocupation ?? user.Ocupation;
+        user.Name = userUpdate.Name == null || userUpdate.Name == "" ? user.Name : userUpdate.Name;
+        user.Ocupation = userUpdate.Ocupation == null || userUpdate.Ocupation == "" ? user.Ocupation : userUpdate.Ocupation;
 
         _repository.UpdateUser(user);
         await _repository.SaveChangeAsync();
