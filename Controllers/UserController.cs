@@ -23,7 +23,7 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
         var users = await _repository.GetAllUsers();
         return Ok(users);
       }
-      catch(Exception error)
+      catch (Exception error)
       {
         return BadRequest(error.Message);
       }
@@ -37,7 +37,7 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
         var user = await _repository.GetById(id);
         return Ok(user);
       }
-      catch(Exception error)
+      catch (Exception error)
       {
         var typeError = error.Data == null || error.Data.Count == 0;
         return typeError ? NotFound("User not found") : BadRequest(error.Message);
@@ -51,6 +51,30 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
       return await _repository.SaveChangeAsync()
               ? Ok("Registered user")
               : BadRequest("Error registering user");
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, UserModel userUpdate)
+    {
+      try
+      {
+        var user = await _repository.GetById(id);
+
+        user.Name = userUpdate.Name ?? user.Name;
+        user.BirthDate = userUpdate.BirthDate != new DateTime()
+                          ? userUpdate.BirthDate
+                          : user.BirthDate;
+
+        _repository.UpdateUser(user);
+        await _repository.SaveChangeAsync();
+
+        return Ok("Updated user");
+      }
+      catch (Exception error)
+      {
+        var typeError = error.Data == null || error.Data.Count == 0;
+        return typeError ? NotFound("User not found") : BadRequest(error.Message);
+      }
     }
   }
 }
