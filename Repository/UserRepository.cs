@@ -29,7 +29,7 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
       return user;
     }
 
-    public async Task<UserModel> UpdateUser(UserModel user, int id)
+    public async Task<UserModel> UpdateUser(UserModel user)
     {
       _context.Users.Update(user);
       await _context.SaveChangesAsync();
