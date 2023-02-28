@@ -13,34 +13,38 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository
       _context = context;
     }
 
-    public Task<List<UserModel>> GetAllUsers()
+    public async Task<List<UserModel>> GetAllUsers()
     {
-      return Task.FromResult(_context.Users.ToList());
+      return await _context.Users.ToListAsync();
     }
 
-    public  Task<UserModel> GetById(int id)
+    public async Task<UserModel> GetById(int id)
     {
-      return _context.Users.FirstAsync(x => x.Id == id);
+      return await _context.Users.FirstAsync(x => x.Id == id);
+    }
+    public async Task<UserModel> CreateUser(UserModel user)
+    {
+      var userDb = _context.Users.Add(user);
+      await _context.SaveChangesAsync();
+      return user;
     }
 
-    public void CreateUser(UserModel user)
+    public async Task<UserModel> UpdateUser(UserModel user, int id)
     {
-      _context.Add(user);
+      _context.Users.Update(user);
+      await _context.SaveChangesAsync();
+
+      return user;
     }
 
-    public void UpdateUser(UserModel user)
+    public async Task<bool> DeleteUser(int id)
     {
-      _context.Update(user);
-    }
+      var userDb = await GetById(id);
 
-    public void DeleteUser(UserModel user)
-    {
-      _context.Remove(user);
-    }
+      _context.Users.Remove(userDb);
+      await _context.SaveChangesAsync();
 
-    public async Task<bool> SaveChangeAsync()
-    {
-      return await _context.SaveChangesAsync() > 0;
+      return true;
     }
   }
 }
