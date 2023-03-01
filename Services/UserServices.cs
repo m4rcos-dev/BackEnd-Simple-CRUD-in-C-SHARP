@@ -1,14 +1,13 @@
-using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Interfaces;
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models;
-using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository;
+using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Interfaces;
 
 namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Services
 {
-  public class UserService : IUserServices
+  public class UserServices : IUserServices
   {
-    private readonly UserRepository _repository;
+    private readonly IUserRepository _repository;
 
-    public UserService(UserRepository repository)
+    public UserServices(IUserRepository repository)
     {
       _repository = repository;
     }
