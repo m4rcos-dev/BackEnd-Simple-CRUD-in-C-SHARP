@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models
 {
 
@@ -11,7 +13,11 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models
     }
 
     public int Id { get; set; }
+
+    [Required(ErrorMessage = "The field {0} is required")]
     public string Name { get; set; }
+
+    [Required(ErrorMessage = "The field {0} is required")]
     public string Ocupation { get; set; }
   }
 }

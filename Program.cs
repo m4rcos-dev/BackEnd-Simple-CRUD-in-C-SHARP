@@ -1,5 +1,7 @@
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Data;
+using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Interfaces;
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository;
+using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,14 +22,20 @@ builder.Services.AddDbContext<UserContext>(options =>
 
 // Injeção de depêndencia do Repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+  app.UseExceptionHandler("/error-development");
   app.UseSwagger();
   app.UseSwaggerUI();
+}
+else
+{
+  app.UseExceptionHandler("/error");
 }
 
 app.UseHttpsRedirection();

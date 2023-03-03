@@ -1,5 +1,6 @@
+using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Interfaces;
 using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Models;
-using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Repository;
+using BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Services;
 using Microsoft.AspNetCore.Mvc;
 namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
 {
@@ -8,100 +9,47 @@ namespace BackEnd_Simple_CRUD_in_C_SHARP_MySQL.Controllers
   [Route("/users")]
   public class UserController : ControllerBase
   {
-    private readonly IUserRepository _repository;
+    private readonly IUserServices _service;
 
-    public UserController(IUserRepository repository)
+    public UserController(IUserServices service)
     {
-      _repository = repository;
+      _service = service;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetAll()
     {
-      try
-      {
-        var users = await _repository.GetAllUsers();
+        var users = await _service.GetAllUsers();
         return Ok(users);
-      }
-      catch (Exception error)
-      {
-        return BadRequest(error.Message);
-      }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-      try
-      {
-        var user = await _repository.GetById(id);
+        var user = await _service.GetById(id);
         return Ok(user);
-      }
-      catch (Exception error)
-      {
-        var typeError = error.Data == null || error.Data.Count == 0;
-        return typeError ? NotFound("User not found") : BadRequest(error.Message);
-      }
     }
 
     [HttpPost]
     public async Task<IActionResult> Post(UserModel user)
     {
-      try
-      {
-        if (user.Name == null || user.Name == "") throw new Exception("name field required");
-        if (user.Ocupation == null || user.Ocupation == "") throw new Exception("ocupation field required");
-
-        _repository.CreateUser(user);
-        await _repository.SaveChangeAsync();
-
+        await _service.CreateUser(user);
         return Ok("Registered user");
-      }
-      catch(Exception error)
-      {
-        return BadRequest(error.Message);
-      }
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, UserModel userUpdate)
     {
-      try
-      {
-        var user = await _repository.GetById(id);
-
-        user.Name = userUpdate.Name == null || userUpdate.Name == "" ? user.Name : userUpdate.Name;
-        user.Ocupation = userUpdate.Ocupation == null || userUpdate.Ocupation == "" ? user.Ocupation : userUpdate.Ocupation;
-
-        _repository.UpdateUser(user);
-        await _repository.SaveChangeAsync();
-
+        await _service.UpdateUser(userUpdate, id);
         return Ok("Updated user");
-      }
-      catch (Exception error)
-      {
-        var typeError = error.Data == null || error.Data.Count == 0;
-        return typeError ? NotFound("User not found") : BadRequest(error.Message);
-      }
+
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      try
-      {
-        var user = await _repository.GetById(id);
-
-        _repository.DeleteUser(user);
-        await _repository.SaveChangeAsync();
-
+        await _service.DeleteUser(id);
         return Ok("Deleted user");
-      }
-      catch (Exception error)
-      {
-        var typeError = error.Data == null || error.Data.Count == 0;
-        return typeError ? NotFound("User not found") : BadRequest(error.Message);
-      }
     }
   }
 }
